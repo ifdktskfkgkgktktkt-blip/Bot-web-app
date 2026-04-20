@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no,
+viewport-fit=cover">
+
+<title>Мобильное меню</title>
+
+<!-- Telegram WebApp -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    background-color: #0c0c0e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* Центр */
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#page-title {
+    font-size: 28px;
+    font-weight: 300;
+    text-align: center;
+}
+
+/* НИЖНЯЯ ПАНЕЛЬ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: #161618;
+    border-top: 1px solid #252528;
+
+    padding-top: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 1000;
+}
+
+/* КНОПКА */
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* КОНТЕЙНЕР ИКОНКИ */
+.nav-icon-container {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ИКОНКА */
+.nav-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+
+    filter: brightness(0.65);
+    transition: filter 0.2s ease;
+}
+
+/* АКТИВНАЯ */
+.nav-item.active .nav-icon {
+    filter: brightness(1.2);
+}
+
+/* ТЕКСТ */
+.nav-label {
+    font-size: 13px;
+    color: #8e8e93;
+}
+
+.nav-item.active .nav-label {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* НАЖАТИЕ */
+.nav-item:active {
+    transform: scale(0.94);
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+    <h1 id="page-title">Заработок</h1>
+</div>
+
+<nav class="bottom-nav">
+
+<div class="nav-item active" onclick="setActive(this,'Заработок')">
+    <div class="nav-icon-container">
+        <img src="star.png" class="nav-icon">
+    </div>
+    <span class="nav-label">Заработок</span>
+</div>
+
+<div class="nav-item" onclick="setActive(this,'Игры')">
+    <div class="nav-icon-container">
+        <img src="game.png" class="nav-icon">
+    </div>
+    <span class="nav-label">Игры</span>
+</div>
+
+<div class="nav-item" onclick="setActive(this,'Лидеры')">
+    <div class="nav-icon-container">
+        <img src="winer.png" class="nav-icon">
+    </div>
+    <span class="nav-label">Лидеры</span>
+</div>
+
+<div class="nav-item" onclick="setActive(this,'Магазин')">
+    <div class="nav-icon-container">
+        <img src="market.png" class="nav-icon">
+    </div>
+    <span class="nav-label">Магазин</span>
+</div>
+
+<div class="nav-item" onclick="setActive(this,'Профиль')">
+    <div class="nav-icon-container">
+        <img src="profile.png" class="nav-icon">
+    </div>
+    <span class="nav-label">Профиль</span>
+</div>
+
+</nav>
+
+<script>
+const tg = window.Telegram.WebApp;
+
+/* ИНИЦИАЛИЗАЦИЯ */
+tg.ready();
+
+/* РАСТЯГИВАЕМ */
+tg.expand();
+
+/* FULLSCREEN (если доступен) */
+if (tg.requestFullscreen) {
+    tg.requestFullscreen();
+}
+
+/* ПЕРЕКЛЮЧЕНИЕ */
+function setActive(element, title) {
+    if (element.classList.contains('active')) return;
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    element.classList.add('active');
+    document.getElementById('page-title').innerText = title;
+}
+</script>
+
+</body>
+</html>
