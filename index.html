@@ -168,13 +168,14 @@ input::-webkit-inner-spin-button {
     pointer-events: auto;
 }
 
-/* TOAST — FIX */
+/* TOAST */
 .toast-container {
     position: fixed;
-    top: calc(90px + env(safe-area-inset-top)); /* подняли нормально */
+    top: calc(120px + env(safe-area-inset-top));
     left: 12px;
     right: 12px;
     z-index: 9999;
+    transform: translateY(-30px);
 }
 
 .toast {
@@ -187,10 +188,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     gap: 14px;
-
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: toastShow 0.25s ease forwards;
+    animation: slideDown 0.25s ease;
 }
 
 .toast-icon {
@@ -211,7 +209,11 @@ input::-webkit-inner-spin-button {
     transition: 0.25s;
 }
 
-@keyframes toastShow {
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);
@@ -350,7 +352,7 @@ btn.onclick = () => {
     }
 
     if (value > 10000) {
-        showToast("Максимальная сумма — 10 000");
+        showToast("Максимальная сумма — 10 000 звёзд");
         return;
     }
 
