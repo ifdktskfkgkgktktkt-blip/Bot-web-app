@@ -9,64 +9,79 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
+    margin: 0;
     background: #000;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     color: #fff;
-    padding-top: calc(60px + env(safe-area-inset-top));
+    padding-top: 64px;
 }
 
 .container {
-    padding: 16px;
+    padding: 14px;
 }
 
 /* баланс */
 .top {
     display: flex;
     justify-content: flex-end;
-    margin-top: 8px;
 }
 
 .balance {
     background: #2c2c2e;
-    padding: 8px 14px;
-    border-radius: 18px;
+    padding: 7px 13px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 15px;
+    gap: 5px;
+    font-size: 14px;
 }
 
 .star-small {
-    width: 18px;
+    width: 16px;
 }
 
-/* заголовок */.title {
+/* заголовок */
+.title {
     text-align: center;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
-    margin: 22px 0 14px;
+    margin: 18px 0 12px;
+}
+
+/* ERROR */
+.error {
+    background: #d92c2c;
+    padding: 14px 16px;
+    border-radius: 22px;
+    margin-bottom: 12px;
+}
+
+.error-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.error-text {
+    font-size: 14px;
+    color: #ffb4b4;
+    line-height: 1.35;
 }
 
 /* блок */
 .block {
-    margin-top: 14px;
-    padding: 18px;
-    border-radius: 20px;
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: 22px;
     background: linear-gradient(180deg, #1c1c1e, #151517);
 }
 
-/* юзер */
+/* username */
 .input-box {
     background: #111;
-    border-radius: 14px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 14px;
     text-align: center;
     font-size: 18px;
 }
@@ -76,48 +91,23 @@ body {
     color: #8e8e93;
     font-size: 13px;
     margin-top: 10px;
+    line-height: 1.35;
 }
 
-/* ошибка - красный блок */
-.error {
-    background: #d4322c;
-    padding: 16px;
-    border-radius: 16px;
-    margin-bottom: 14px;
-}
-
-.error-title {
-    font-size: 19px;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
-
-.error-text {
-    font-size: 15px;
-    color: #ffb3b3;
-    line-height: 1.4;
-}
 /* сумма */
-.amount-wrapper {
-    background: linear-gradient(180deg, #1c1c1e, #151517);
-    border-radius: 20px;
-    padding: 40px 20px;
-    margin-top: 14px;
+.amount-center {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 180px;
+    align-items: center;
+    height: 95px;
 }
 
-.amount-display {
+.amount-inner {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 12px;
 }
 
+/* цифра */
 .amount-input {
     font-size: 64px;
     font-weight: 700;
@@ -125,32 +115,41 @@ body {
     outline: none;
     background: transparent;
     color: #fff;
-    text-align: center;
-    width: 80px;
-    padding: 0;
+    text-align: right;
+    width: 2ch;
 }
 
+/* убрать стрелки */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* звезда */
 .star-big {
-    width: 52px;
-    height: 52px;
+    width: 46px;
+    height: 46px;
+    margin-left: 6px;
 }
 
+/* лимиты */
 .limits {
     text-align: center;
     color: #8e8e93;
-    font-size: 15px;
-    margin-top: 8px;
+    margin-top: 4px;
+    font-size: 13px;
 }
 
 /* кнопка */
 .button {
     position: fixed;
-    bottom: calc(18px + env(safe-area-inset-bottom));    left: 16px;
-    right: 16px;
+    bottom: 18px;
+    left: 14px;
+    right: 14px;
     background: #fff;
     color: #000;
     text-align: center;
-    padding: 18px;
+    padding: 16px;
     border-radius: 26px;
     font-size: 17px;
     font-weight: 600;
@@ -164,60 +163,53 @@ body {
     pointer-events: auto;
 }
 
-/* TOAST - БОЛЬШОЙ под кнопками ТГ */
+/* TOAST */
 .toast-container {
     position: fixed;
-    top: calc(8px + env(safe-area-inset-top));
+    top: calc(100px + env(safe-area-inset-top));
     left: 12px;
     right: 12px;
     z-index: 9999;
 }
 
 .toast {
-    background: #d4322c;
+    background: #c62828;
     color: #fff;
-    padding: 20px 24px;
-    border-radius: 24px;
-    font-size: 19px;
-    font-weight: 600;
+    padding: 14px 16px;
+    border-radius: 22px;
+    font-size: 15px;
     display: flex;
     align-items: center;
-    gap: 16px;
-    animation: slideDown 0.3s ease;
-    box-shadow: 0 8px 24px rgba(212, 50, 44, 0.4);
+    gap: 10px;
+    animation: slideDown 0.25s ease;
 }
 
 .toast-icon {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
+    font-size: 13px;
 }
 
 .toast.hide {
     opacity: 0;
     transform: translateY(-10px);
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 @keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-12px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.hidden {
-    display: none !important;
 }
 </style>
 </head>
@@ -235,24 +227,28 @@ body {
 
     <div class="title">Вывод средств</div>
 
-    <div id="errorBox" class="error hidden">
+    <div id="errorBox" class="error" style="display:none;">
         <div class="error-title">Вывод невозможен!</div>
         <div class="error-text">
             Для вывода у вашего аккаунта обязательно должен быть юзернейм!
         </div>
     </div>
 
-    <div class="block hidden" id="userBlock">
+    <div class="block" id="userBlock">
         <div class="input-box" id="username">@username</div>
-        <div class="subtext">            Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!
+        <div class="subtext">
+            Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!
         </div>
     </div>
 
-    <div class="amount-wrapper">
-        <div class="amount-display">
-            <input type="number" id="amountInput" class="amount-input" value="0" inputmode="numeric">
-            <img class="star-big" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
+    <div class="block">
+        <div class="amount-center">
+            <div class="amount-inner">
+                <input type="number" id="amountInput" class="amount-input" value="0">
+                <img class="star-big" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
+            </div>
         </div>
+
         <div class="limits">
             Минимальная сумма - 50, максимальная 10.000
         </div>
@@ -281,19 +277,18 @@ let currentToast = null;
 
 if (!user || !user.username) {
     hasUsername = false;
-    errorBox.classList.remove("hidden");
-    userBlock.classList.add("hidden");
+    errorBox.style.display = "block";
+    userBlock.style.display = "none";
 } else {
     document.getElementById("username").innerText = "@" + user.username;
-    errorBox.classList.add("hidden");
-    userBlock.classList.remove("hidden");
 }
 
 input.addEventListener("focus", () => {
     if (input.value === "0") input.value = "";
 });
 
-input.addEventListener("blur", () => {    if (input.value === "") {
+input.addEventListener("blur", () => {
+    if (input.value === "") {
         input.value = "0";
         btn.classList.remove("active");
         btn.innerText = "Введите сумму";
@@ -301,12 +296,7 @@ input.addEventListener("blur", () => {    if (input.value === "") {
 });
 
 input.addEventListener("input", () => {
-    let value = input.value.replace(/^0+/, '');
-    if (value === '') value = '0';
-    
-    if (input.value !== value) {
-        input.value = value;
-    }
+    input.style.width = (input.value.length + 1) + "ch";
 
     if (input.value.length > 0 && hasUsername) {
         btn.classList.add("active");
@@ -339,9 +329,10 @@ function showToast(text) {
         setTimeout(() => {
             toast.remove();
             currentToast = null;
-        }, 300);
+        }, 250);
     }, 2500);
 }
+
 btn.onclick = () => {
     if (!hasUsername) return;
 
@@ -366,5 +357,3 @@ btn.onclick = () => {
 
 </body>
 </html>
-
-
