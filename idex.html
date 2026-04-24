@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,27 +15,30 @@ body {
     background: #000;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     color: #fff;
-    padding-top: 64px;
+    padding-top: 100px;
 }
 
 .container {
     padding: 14px;
 }
 
-/* баланс */
+/* баланс сверху справа */
 .top {
-    display: flex;
-    justify-content: flex-end;
+    position: fixed;
+    top: calc(56px + env(safe-area-inset-top));
+    right: 14px;
+    z-index: 1000;
 }
 
 .balance {
     background: #2c2c2e;
-    padding: 7px 13px;
-    border-radius: 16px;
+    padding: 8px 14px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 14px;
+    gap: 6px;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 .star-small {
@@ -77,7 +81,7 @@ body {
     background: linear-gradient(180deg, #1c1c1e, #151517);
 }
 
-/* username красивый */
+/* username */
 .input-box {
     background: linear-gradient(180deg, #1f1f1f, #171717);
     border-radius: 18px;
@@ -171,7 +175,7 @@ input::-webkit-inner-spin-button {
 /* TOAST */
 .toast-container {
     position: fixed;
-    top: calc(120px + env(safe-area-inset-top));
+    top: calc(64px + env(safe-area-inset-top)); /* подняли вверх */
     left: 12px;
     right: 12px;
     z-index: 9999;
@@ -223,14 +227,14 @@ input::-webkit-inner-spin-button {
 
 <body>
 
-<div class="container">
-
-    <div class="top">
-        <div class="balance">
-            <img class="star-small" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
-            <span id="balance">2.66</span>
-        </div>
+<div class="top">
+    <div class="balance">
+        <img class="star-small" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
+        <span id="balance">2.66</span>
     </div>
+</div>
+
+<div class="container">
 
     <div class="title">Вывод средств</div>
 
