@@ -168,14 +168,13 @@ input::-webkit-inner-spin-button {
     pointer-events: auto;
 }
 
-/* TOAST */
+/* TOAST — FIX */
 .toast-container {
     position: fixed;
-    top: calc(120px + env(safe-area-inset-top));
+    top: calc(90px + env(safe-area-inset-top)); /* подняли нормально */
     left: 12px;
     right: 12px;
     z-index: 9999;
-    transform: translateY(-30px); /* ВОТ ТУТ подняли вверх */
 }
 
 .toast {
@@ -188,7 +187,10 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     gap: 14px;
-    animation: slideDown 0.25s ease;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: toastShow 0.25s ease forwards;
 }
 
 .toast-icon {
@@ -209,11 +211,7 @@ input::-webkit-inner-spin-button {
     transition: 0.25s;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
+@keyframes toastShow {
     to {
         opacity: 1;
         transform: translateY(0);
