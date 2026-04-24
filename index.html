@@ -14,17 +14,17 @@ body {
     background: #000;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     color: #fff;
-    padding-top: 90px;
+    padding-top: 100px;
 }
 
 .container {
     padding: 14px;
 }
 
-/* баланс */
+/* баланс сверху справа */
 .top {
     position: fixed;
-    top: calc(42px + env(safe-area-inset-top));
+    top: calc(56px + env(safe-area-inset-top));
     right: 14px;
     z-index: 1000;
 }
@@ -171,10 +171,10 @@ input::-webkit-inner-spin-button {
     pointer-events: auto;
 }
 
-/* TOAST — ПОДНЯТ ВВЕРХ */
+/* TOAST */
 .toast-container {
     position: fixed;
-    top: calc(40px + env(safe-area-inset-top)); /* максимально вверх */
+    top: calc(64px + env(safe-area-inset-top)); /* подняли вверх */
     left: 12px;
     right: 12px;
     z-index: 9999;
