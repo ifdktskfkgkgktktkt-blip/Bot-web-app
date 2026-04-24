@@ -14,17 +14,17 @@ body {
     background: #000;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     color: #fff;
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .container {
     padding: 14px;
 }
 
-/* баланс сверху справа */
+/* баланс закреплён */
 .top {
     position: fixed;
-    top: calc(56px + env(safe-area-inset-top));
+    top: calc(52px + env(safe-area-inset-top));
     right: 14px;
     z-index: 1000;
 }
@@ -135,6 +135,7 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+/* звезда */
 .star-big {
     width: 46px;
     height: 46px;
@@ -174,7 +175,7 @@ input::-webkit-inner-spin-button {
 /* TOAST */
 .toast-container {
     position: fixed;
-    top: calc(64px + env(safe-area-inset-top)); /* подняли вверх */
+    top: calc(120px + env(safe-area-inset-top));
     left: 12px;
     right: 12px;
     z-index: 9999;
