@@ -47,8 +47,7 @@ body {
     width: 18px;
 }
 
-/* заголовок */
-.title {
+/* заголовок */.title {
     text-align: center;
     font-size: 26px;
     font-weight: 600;
@@ -98,7 +97,6 @@ body {
     color: #ffb3b3;
     line-height: 1.4;
 }
-
 /* сумма */
 .amount-wrapper {
     background: linear-gradient(180deg, #1c1c1e, #151517);
@@ -147,8 +145,7 @@ body {
 /* кнопка */
 .button {
     position: fixed;
-    bottom: calc(18px + env(safe-area-inset-bottom));
-    left: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));    left: 16px;
     right: 16px;
     background: #fff;
     color: #000;
@@ -167,38 +164,38 @@ body {
     pointer-events: auto;
 }
 
-/* TOAST - как на первом скриншоте */
+/* TOAST - БОЛЬШОЙ под кнопками ТГ */
 .toast-container {
     position: fixed;
-    top: calc(16px + env(safe-area-inset-top));
-    left: 16px;
-    right: 16px;
+    top: calc(8px + env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
     z-index: 9999;
 }
 
 .toast {
-    background: #c62828;
+    background: #d4322c;
     color: #fff;
-    padding: 16px 20px;
-    border-radius: 20px;
-    font-size: 17px;
-    font-weight: 500;
+    padding: 20px 24px;
+    border-radius: 24px;
+    font-size: 19px;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     animation: slideDown 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 24px rgba(212, 50, 44, 0.4);
 }
 
 .toast-icon {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 20px;
     flex-shrink: 0;
 }
 
@@ -247,8 +244,7 @@ body {
 
     <div class="block hidden" id="userBlock">
         <div class="input-box" id="username">@username</div>
-        <div class="subtext">
-            Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!
+        <div class="subtext">            Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!
         </div>
     </div>
 
@@ -297,8 +293,7 @@ input.addEventListener("focus", () => {
     if (input.value === "0") input.value = "";
 });
 
-input.addEventListener("blur", () => {
-    if (input.value === "") {
+input.addEventListener("blur", () => {    if (input.value === "") {
         input.value = "0";
         btn.classList.remove("active");
         btn.innerText = "Введите сумму";
@@ -347,7 +342,6 @@ function showToast(text) {
         }, 300);
     }, 2500);
 }
-
 btn.onclick = () => {
     if (!hasUsername) return;
 
