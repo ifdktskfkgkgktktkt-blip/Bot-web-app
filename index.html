@@ -2,404 +2,210 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<title>Вывод средств</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Stars App</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <style>
-body {
-    margin: 0;
-    background: #000;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #fff;
-    padding-top: 64px;
-}
-
-.container {
-    padding: 14px;
-}
-
-/* баланс */
-.top {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.balance {
-    background: #2c2c2e;
-    padding: 7px 13px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-}
-
-.star-small {
-    width: 16px;
-}
-
-/* заголовок */
-.title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 18px 0 12px;
-}
-
-/* ERROR */
-.error {
-    background: #d92c2c;
-    padding: 14px 16px;
-    border-radius: 22px;
-    margin-bottom: 12px;
-}
-
-.error-title {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.error-text {
-    font-size: 14px;
-    color: #ffb4b4;
-    line-height: 1.35;
-}
-
-/* блок */
-.block {
-    margin-top: 12px;
-    padding: 16px;
-    border-radius: 22px;
-    background: linear-gradient(180deg, #1c1c1e, #151517);
-}
-
-/* username */
-.input-box {
-    background: linear-gradient(180deg, #1f1f1f, #171717);
-    border-radius: 18px;
-    padding: 16px;
-    text-align: center;
-    font-size: 18px;
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        inset 0 -1px 0 rgba(0,0,0,0.4);
-}
-
-#username {
-    color: #e6e6e6;
-    letter-spacing: 0.3px;
-}
-
-.subtext {
-    text-align: center;
-    color: #8e8e93;
-    font-size: 13px;
-    margin-top: 10px;
-    line-height: 1.35;
-}
-
-/* сумма */
-.amount-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 95px;
-}
-
-.amount-inner {
-    display: flex;
-    align-items: center;
-}
-
-.amount-input {
-    font-size: 64px;
-    font-weight: 700;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #fff;
-    text-align: right;
-    width: 2ch;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-.star-big {
-    width: 46px;
-    height: 46px;
-    margin-left: 6px;
-}
-
-.limits {
-    text-align: center;
-    color: #8e8e93;
-    margin-top: 4px;
-    font-size: 13px;
-}
-
-/* кнопка */
-.button {
-    position: fixed;
-    bottom: 18px;
-    left: 14px;
-    right: 14px;
-    background: #fff;
-    color: #000;
-    text-align: center;
-    padding: 16px;
-    border-radius: 26px;
-    font-size: 17px;
-    font-weight: 600;
-    opacity: 0.4;
-    pointer-events: none;
-    transition: 0.2s;
-}
-
-.button.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* TOAST */
-.toast-container {
-    position: fixed;
-    top: calc(120px + env(safe-area-inset-top));
-    left: 12px;
-    right: 12px;
-    z-index: 9999;
-    transform: translateY(-30px);
-}
-
-.toast {
-    background: #c62828;
-    color: #fff;
-    padding: 18px 20px;
-    border-radius: 28px;
-    font-size: 17px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    animation: slideDown 0.25s ease;
-}
-
-.toast.success {
-    background: #2ea043;
-}
-
-.toast-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.toast.hide {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: 0.25s;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+body{margin:0;padding:0;background:#0c0c0e;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;color:#fff;overflow-x:hidden}
+p{font-size:large}
+.bottom-nav{display:flex;justify-content:space-around;align-items:center;background:#161618;width:100%;position:fixed;bottom:0;left:0;padding:4px 0 24px;border-top:1px solid #252528;box-sizing:border-box;z-index:1000}
+.nav-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex:1;-webkit-tap-highlight-color:transparent;user-select:none}
+.nav-icon-container{width:36px;height:36px;margin-bottom:6px;display:flex;justify-content:center;align-items:center}
+.nav-icon{width:25px;height:25px;object-fit:contain;filter:brightness(.65);transition:filter .15s linear}
+.nav-item.active .nav-icon{filter:brightness(1.1)}
+.nav-label{font-size:14px;font-weight:500;color:#8e8e93}
+.nav-item.active .nav-label{color:#fff;font-weight:600}
+.content-pages{width:100%;max-width:600px;flex:1;padding:16px;box-sizing:border-box}
+.page-section{display:none;width:100%}
+.page-section.active-page{display:block}
+.section-title{font-size:32px;font-weight:300;margin:0 0 20px;letter-spacing:-.02em}
+.container{background:#ffffff1a;border-radius:24px;padding:10px}
+.star_logo{width:32px;height:32px}
+.flexer{display:flex;text-align:center;align-items:center;justify-content:center}
+#stars_balance_profile,#stars_balance_top{margin:0 0 0 12px;font-weight:bold}
+.hint_text{width:100%;text-align:center;color:#8e8e93;margin:0;line-height:1.1}
+.btn{font-size:x-large;margin:4px;width:100%;padding:16px;border-radius:24px;border:none;background:#49494c;color:#fff;transition:all .2s ease;cursor:pointer}
+.btn:hover{filter:brightness(90%)}
+.btn:active{transform:scale(.98);filter:brightness(85%)}
+.white_btn{background:#fff;color:#000}
+.flexer:last-child{margin-top:-4px}
+.current_balance{background:#49494c;display:flex;width:max-content;padding:4px 10px;border-radius:24px;margin:64px 0 16px auto}
+.withdraw-screen{display:none;position:fixed;inset:0;background:#000;z-index:2000;overflow-y:auto;padding:64px 0 100px}
+.withdraw-screen.active{display:block}
+.withdraw-screen .wrap{padding:14px}
+.withdraw-screen .top{display:flex;justify-content:space-between;align-items:center}
+.withdraw-screen .back-btn{background:#2c2c2e;border:none;color:#fff;font-size:15px;padding:7px 14px;border-radius:16px;cursor:pointer}
+.withdraw-screen .balance{background:#2c2c2e;padding:7px 13px;border-radius:16px;display:flex;align-items:center;gap:5px;font-size:14px}
+.withdraw-screen .star-small{width:16px}
+.withdraw-screen .title{text-align:center;font-size:24px;font-weight:600;margin:18px 0 12px}
+.withdraw-screen .error{background:#d92c2c;padding:14px 16px;border-radius:22px;margin-bottom:12px}
+.withdraw-screen .error-title{font-size:17px;font-weight:600;margin-bottom:4px}
+.withdraw-screen .error-text{font-size:14px;color:#ffb4b4;line-height:1.35}
+.withdraw-screen .block{margin-top:12px;padding:16px;border-radius:22px;background:linear-gradient(180deg,#1c1c1e,#151517)}
+.withdraw-screen .input-box{background:linear-gradient(180deg,#1f1f1f,#171717);border-radius:18px;padding:16px;text-align:center;font-size:18px;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -1px 0 rgba(0,0,0,.4)}
+.withdraw-screen #w-username{color:#e6e6e6;letter-spacing:.3px}
+.withdraw-screen .subtext{text-align:center;color:#8e8e93;font-size:13px;margin-top:10px;line-height:1.35}
+.withdraw-screen .amount-center{display:flex;justify-content:center;align-items:center;height:95px}
+.withdraw-screen .amount-inner{display:flex;align-items:center}
+.withdraw-screen .amount-input{font-size:64px;font-weight:700;border:none;outline:none;background:transparent;color:#fff;text-align:right;width:2ch}
+.withdraw-screen input::-webkit-outer-spin-button,.withdraw-screen input::-webkit-inner-spin-button{-webkit-appearance:none}
+.withdraw-screen .star-big{width:46px;height:46px;margin-left:6px}
+.withdraw-screen .limits{text-align:center;color:#8e8e93;margin-top:4px;font-size:13px}
+.withdraw-screen .button{position:fixed;bottom:18px;left:14px;right:14px;background:#fff;color:#000;text-align:center;padding:16px;border-radius:26px;font-size:17px;font-weight:600;opacity:.4;pointer-events:none;transition:.2s;cursor:pointer}
+.withdraw-screen .button.active{opacity:1;pointer-events:auto}
+.toast-container{position:fixed;top:calc(120px + env(safe-area-inset-top));left:12px;right:12px;z-index:9999}
+.toast{background:#c62828;color:#fff;padding:18px 20px;border-radius:28px;font-size:17px;font-weight:500;display:flex;align-items:center;gap:14px;animation:slideDown .25s ease}
+.toast.success{background:#2ea043}
+.toast-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600}
+.toast.hide{opacity:0;transform:translateY(-10px);transition:.25s}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-    <div class="top">
-        <div class="balance">
-            <img class="star-small" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
-            <span id="balance">2.66</span>
-        </div>
+<div class="content-pages">
+    <div class="current_balance">
+        <img src="https://chimpbot.org/assets/stars-BaCoVmhq.svg" style="width:20px">
+        <p id="stars_balance_top" style="margin-left:6px">0000,00</p>
     </div>
-
-    <div class="title">Вывод средств</div>
-
-    <div id="errorBox" class="error" style="display:none;">
-        <div class="error-title">Вывод невозможен!</div>
-        <div class="error-text">
-            Для вывода у вашего аккаунта обязательно должен быть юзернейм!
-        </div>
-    </div>
-
-    <div class="block" id="userBlock">
-        <div class="input-box" id="username">@username</div>
-        <div class="subtext">
-            Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!
-        </div>
-    </div>
-
-    <div class="block">
-        <div class="amount-center">
-            <div class="amount-inner">
-                <input type="number" id="amountInput" class="amount-input" value="0">
-                <img class="star-big" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
+    <div id="page-earn" class="page-section active-page" data-page="Заработок"><h2 class="section-title">Заработок</h2></div>
+    <div id="page-games" class="page-section" data-page="Игры"><h2 class="section-title">Игры</h2></div>
+    <div id="page-leaders" class="page-section" data-page="Лидеры"><h2 class="section-title">Лидеры</h2></div>
+    <div id="page-shop" class="page-section" data-page="Магазин"><h2 class="section-title">Магазин</h2></div>
+    <div id="page-profile" class="page-section" data-page="Профиль">
+        <div class="container" style="margin-top:64px">
+            <div class="flexer" style="margin-bottom:4px">
+                <img src="https://chimpbot.org/assets/stars-BaCoVmhq.svg" class="star_logo">
+                <p id="stars_balance_profile" style="font-size:x-large">0000,00</p>
+            </div>
+            <p class="hint_text">Баланс звёзд</p>
+            <div class="flexer" style="margin-top:12px">
+                <button class="btn" id="openWithdraw">Вывести</button>
+                <button class="btn white_btn">Пополнить</button>
             </div>
         </div>
-
-        <div class="limits">
-            Минимальная сумма - 50, максимальная 10.000
+    </div>
+</div>
+<nav class="bottom-nav">
+    <div class="nav-item active" data-title="Заработок"><div class="nav-icon-container"><img src="star.png" class="nav-icon"></div><span class="nav-label">Заработок</span></div>
+    <div class="nav-item" data-title="Игры"><div class="nav-icon-container"><img src="game.png" class="nav-icon"></div><span class="nav-label">Игры</span></div>
+    <div class="nav-item" data-title="Лидеры"><div class="nav-icon-container"><img src="winer.png" class="nav-icon"></div><span class="nav-label">Лидеры</span></div>
+    <div class="nav-item" data-title="Магазин"><div class="nav-icon-container"><img src="market.png" class="nav-icon"></div><span class="nav-label">Магазин</span></div>
+    <div class="nav-item" data-title="Профиль"><div class="nav-icon-container"><img src="profile.png" class="nav-icon"></div><span class="nav-label">Профиль</span></div>
+</nav>
+<div class="withdraw-screen" id="withdrawScreen">
+    <div class="wrap">
+        <div class="top">
+            <button class="back-btn" id="backBtn">← Назад</button>
+            <div class="balance"><img class="star-small" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg"><span id="w-balance">2.66</span></div>
+        </div>
+        <div class="title">Вывод средств</div>
+        <div id="errorBox" class="error" style="display:none">
+            <div class="error-title">Вывод невозможен!</div>
+            <div class="error-text">Для вывода у вашего аккаунта обязательно должен быть юзернейм!</div>
+        </div>
+        <div class="block" id="userBlock">
+            <div class="input-box" id="w-username">@username</div>
+            <div class="subtext">Звезды придут к вам на аккаунт Telegram. Убедитесь, что юзернейм верный!</div>
+        </div>
+        <div class="block">
+            <div class="amount-center"><div class="amount-inner">
+                <input type="number" id="amountInput" class="amount-input" value="0">
+                <img class="star-big" src="https://chimpbot.org/assets/stars-BaCoVmhq.svg">
+            </div></div>
+            <div class="limits">Минимальная сумма - 50, максимальная 10.000</div>
         </div>
     </div>
-
+    <div class="button" id="btn">Введите сумму</div>
 </div>
-
-<div class="button" id="btn">Введите сумму</div>
-
 <div class="toast-container" id="toasts"></div>
-
 <script>
-let tg = null;
+let tg=null;
+if(window.Telegram&&window.Telegram.WebApp){tg=window.Telegram.WebApp;try{tg.expand();}catch(e){}}
+const tgUser=tg&&tg.initDataUnsafe?tg.initDataUnsafe.user:null;
 
-if (window.Telegram && window.Telegram.WebApp) {
-    tg = window.Telegram.WebApp;
-    try {
-        tg.expand();
-    } catch(e) {}
-}
-
-const user = tg && tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
-
-const errorBox = document.getElementById("errorBox");
-const userBlock = document.getElementById("userBlock");
-const input = document.getElementById("amountInput");
-const btn = document.getElementById("btn");
-const toastContainer = document.getElementById("toasts");
-
-let hasUsername = true;
-let currentToast = null;
-let isSending = false;
-
-if (!user || !user.username) {
-    hasUsername = false;
-    errorBox.style.display = "block";
-    userBlock.style.display = "none";
-} else {
-    document.getElementById("username").innerText = "@" + user.username;
-}
-
-input.addEventListener("focus", function() {
-    if (input.value === "0") input.value = "";
-});
-
-input.addEventListener("blur", function() {
-    if (input.value === "") {
-        input.value = "0";
-        btn.classList.remove("active");
-        btn.innerText = "Введите сумму";
+(function(){
+    const items=document.querySelectorAll('.nav-item');
+    const balanceBlock=document.querySelector('.current_balance');
+    const pages={'Заработок':document.getElementById('page-earn'),'Игры':document.getElementById('page-games'),'Лидеры':document.getElementById('page-leaders'),'Магазин':document.getElementById('page-shop'),'Профиль':document.getElementById('page-profile')};
+    function updateBalanceVisibility(s){const show=['Заработок','Игры','Магазин'].includes(s);if(balanceBlock)balanceBlock.style.display=show?'flex':'none';}
+    function activate(event){
+        if(event.type==='touchstart'){if(this._touchHandled)return;this._touchHandled=true;setTimeout(()=>{this._touchHandled=false;},100);}
+        if(this.classList.contains('active'))return;
+        items.forEach(i=>i.classList.remove('active'));
+        this.classList.add('active');
+        const s=this.dataset.title;
+        Object.values(pages).forEach(p=>{if(p)p.classList.remove('active-page');});
+        const ap=pages[s];if(ap)ap.classList.add('active-page');
+        updateBalanceVisibility(s);
     }
-});
+    items.forEach(i=>{i._touchHandled=false;i.addEventListener('touchstart',activate,{passive:true});i.addEventListener('click',activate);});
+    const init=document.querySelector('.nav-item.active');
+    if(init){const s=init.dataset.title;Object.values(pages).forEach(p=>p.classList.remove('active-page'));const ip=pages[s];if(ip)ip.classList.add('active-page');updateBalanceVisibility(s);}
+    else updateBalanceVisibility('Заработок');
+})();
 
-input.addEventListener("input", function() {
-    input.style.width = (input.value.length + 1) + "ch";
+(function(){
+    const screen=document.getElementById('withdrawScreen');
+    const openBtn=document.getElementById('openWithdraw');
+    const backBtn=document.getElementById('backBtn');
+    const errorBox=document.getElementById('errorBox');
+    const userBlock=document.getElementById('userBlock');
+    const input=document.getElementById('amountInput');
+    const btn=document.getElementById('btn');
+    const toastContainer=document.getElementById('toasts');
+    let hasUsername=true,currentToast=null,isSending=false;
 
-    if (input.value.length > 0 && hasUsername && !isSending) {
-        btn.classList.add("active");
-        btn.innerText = "Вывести";
-    } else {
-        btn.classList.remove("active");
-        btn.innerText = "Введите сумму";
-    }
-});
-
-function showToast(text, type) {
-    if (!type) type = "error";
-
-    if (currentToast) {
-        currentToast.remove();
-        currentToast = null;
+    if(!tgUser||!tgUser.username){
+        hasUsername=false;
+        errorBox.style.display='block';
+        userBlock.style.display='none';
+    }else{
+        document.getElementById('w-username').innerText='@'+tgUser.username;
     }
 
-    const toast = document.createElement("div");
-    toast.className = "toast " + (type === "success" ? "success" : "");
+    openBtn.addEventListener('click',()=>{screen.classList.add('active');document.body.style.overflow='hidden';});
+    backBtn.addEventListener('click',()=>{screen.classList.remove('active');document.body.style.overflow='';});
 
-    const icon = type === "success" ? "✓" : "✕";
+    input.addEventListener('focus',function(){if(input.value==='0')input.value='';});
+    input.addEventListener('blur',function(){if(input.value===''){input.value='0';btn.classList.remove('active');btn.innerText='Введите сумму';}});
+    input.addEventListener('input',function(){
+        input.style.width=(input.value.length+1)+'ch';
+        if(input.value.length>0&&hasUsername&&!isSending){btn.classList.add('active');btn.innerText='Вывести';}
+        else{btn.classList.remove('active');btn.innerText='Введите сумму';}
+    });
 
-    toast.innerHTML =
-        '<div class="toast-icon">' + icon + '</div>' +
-        '<div>' + text + '</div>';
+    function showToast(text,type){
+        if(!type)type='error';
+        if(currentToast){currentToast.remove();currentToast=null;}
+        const t=document.createElement('div');
+        t.className='toast '+(type==='success'?'success':'');
+        const icon=type==='success'?'✓':'✕';
+        t.innerHTML='<div class="toast-icon">'+icon+'</div><div>'+text+'</div>';
+        toastContainer.appendChild(t);
+        currentToast=t;
+        setTimeout(()=>{t.classList.add('hide');setTimeout(()=>{if(t.parentNode)t.parentNode.removeChild(t);currentToast=null;},250);},2500);
+    }
 
-    toastContainer.appendChild(toast);
-    currentToast = toast;
-
-    setTimeout(function() {
-        toast.classList.add("hide");
-        setTimeout(function() {
-            if (toast.parentNode) {
-                toast.parentNode.removeChild(toast);
+    btn.onclick=function(){
+        if(!hasUsername||isSending)return;
+        const value=parseInt(input.value);
+        if(!value||value<50){showToast('Минимальная сумма — 50 звезд');return;}
+        if(value>10000){showToast('Максимальная сумма — 10 000 звёзд');return;}
+        isSending=true;
+        btn.classList.remove('active');
+        btn.innerText='Отправка...';
+        showToast('Вывод в обработке. Это может занять до суток.','success');
+        setTimeout(()=>{
+            try{
+                if(tg&&tg.sendData){tg.sendData(JSON.stringify({action:'withdraw',amount:value}));}
+                else{showToast('Тестовый режим','success');}
+            }catch(e){
+                isSending=false;btn.classList.add('active');btn.innerText='Вывести';
+                showToast('Ошибка отправки');
             }
-            currentToast = null;
-        }, 250);
-    }, 2500);
-}
-
-btn.onclick = function() {
-    if (!hasUsername) return;
-    if (isSending) return;
-
-    let value = parseInt(input.value);
-
-    if (!value || value < 50) {
-        showToast("Минимальная сумма — 50 звезд");
-        return;
-    }
-
-    if (value > 10000) {
-        showToast("Максимальная сумма — 10 000 звёзд");
-        return;
-    }
-
-    isSending = true;
-
-    btn.classList.remove("active");
-    btn.innerText = "Отправка...";
-
-    showToast("Вывод в обработке. Это может занять до суток.", "success");
-
-    setTimeout(function() {
-        try {
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify({
-                    action: "withdraw",
-                    amount: value
-                }));
-            } else {
-                console.log("TEST MODE:", value);
-                showToast("Тестовый режим", "success");
-            }
-        } catch (e) {
-            isSending = false;
-            btn.classList.add("active");
-            btn.innerText = "Вывести";
-            showToast("Ошибка отправки");
-        }
-    }, 800);
-};
+        },800);
+    };
+})();
 </script>
-
 </body>
 </html>
