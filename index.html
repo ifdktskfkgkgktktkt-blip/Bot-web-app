@@ -273,10 +273,16 @@ input::-webkit-inner-spin-button {
 <div class="toast-container" id="toasts"></div>
 
 <script>
-const tg = window.Telegram.WebApp;
-tg.expand();
+let tg = null;
 
-const user = tg.initDataUnsafe?.user;
+if (window.Telegram && window.Telegram.WebApp) {
+    tg = window.Telegram.WebApp;
+    try {
+        tg.expand();
+    } catch(e) {}
+}
+
+const user = tg && tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
 
 const errorBox = document.getElementById("errorBox");
 const userBlock = document.getElementById("userBlock");
@@ -296,11 +302,11 @@ if (!user || !user.username) {
     document.getElementById("username").innerText = "@" + user.username;
 }
 
-input.addEventListener("focus", () => {
+input.addEventListener("focus", function() {
     if (input.value === "0") input.value = "";
 });
 
-input.addEventListener("blur", () => {
+input.addEventListener("blur", function() {
     if (input.value === "") {
         input.value = "0";
         btn.classList.remove("active");
@@ -308,10 +314,10 @@ input.addEventListener("blur", () => {
     }
 });
 
-input.addEventListener("input", () => {
+input.addEventListener("input", function() {
     input.style.width = (input.value.length + 1) + "ch";
 
-    if (input.value.length > 0 && hasUsername) {
+    if (input.value.length > 0 && hasUsername && !isSending) {
         btn.classList.add("active");
         btn.innerText = "Вывести";
     } else {
@@ -320,7 +326,9 @@ input.addEventListener("input", () => {
     }
 });
 
-function showToast(text, type = "error") {
+function showToast(text, type) {
+    if (!type) type = "error";
+
     if (currentToast) {
         currentToast.remove();
         currentToast = null;
@@ -329,24 +337,27 @@ function showToast(text, type = "error") {
     const toast = document.createElement("div");
     toast.className = "toast " + (type === "success" ? "success" : "");
 
-    toast.innerHTML = `
-        <div class="toast-icon">${type === "success" ? "✓" : "✕"}</div>
-        <div>${text}</div>
-    `;
+    const icon = type === "success" ? "✓" : "✕";
+
+    toast.innerHTML =
+        '<div class="toast-icon">' + icon + '</div>' +
+        '<div>' + text + '</div>';
 
     toastContainer.appendChild(toast);
     currentToast = toast;
 
-    setTimeout(() => {
+    setTimeout(function() {
         toast.classList.add("hide");
-        setTimeout(() => {
-            toast.remove();
+        setTimeout(function() {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
             currentToast = null;
         }, 250);
     }, 2500);
 }
 
-btn.onclick = () => {
+btn.onclick = function() {
     if (!hasUsername) return;
     if (isSending) return;
 
@@ -369,12 +380,17 @@ btn.onclick = () => {
 
     showToast("Вывод в обработке. Это может занять до суток.", "success");
 
-    setTimeout(() => {
+    setTimeout(function() {
         try {
-            tg.sendData(JSON.stringify({
-                action: "withdraw",
-                amount: value
-            }));
+            if (tg && tg.sendData) {
+                tg.sendData(JSON.stringify({
+                    action: "withdraw",
+                    amount: value
+                }));
+            } else {
+                console.log("TEST MODE:", value);
+                showToast("Тестовый режим", "success");
+            }
         } catch (e) {
             isSending = false;
             btn.classList.add("active");
