@@ -286,6 +286,7 @@ const toastContainer = document.getElementById("toasts");
 
 let hasUsername = true;
 let currentToast = null;
+let isSending = false;
 
 if (!user || !user.username) {
     hasUsername = false;
@@ -347,6 +348,7 @@ function showToast(text, type = "error") {
 
 btn.onclick = () => {
     if (!hasUsername) return;
+    if (isSending) return;
 
     let value = parseInt(input.value);
 
@@ -360,12 +362,26 @@ btn.onclick = () => {
         return;
     }
 
+    isSending = true;
+
+    btn.classList.remove("active");
+    btn.innerText = "Отправка...";
+
     showToast("Вывод в обработке. Это может занять до суток.", "success");
 
-    tg.sendData(JSON.stringify({
-        action: "withdraw",
-        amount: value
-    }));
+    setTimeout(() => {
+        try {
+            tg.sendData(JSON.stringify({
+                action: "withdraw",
+                amount: value
+            }));
+        } catch (e) {
+            isSending = false;
+            btn.classList.add("active");
+            btn.innerText = "Вывести";
+            showToast("Ошибка отправки");
+        }
+    }, 800);
 };
 </script>
 
