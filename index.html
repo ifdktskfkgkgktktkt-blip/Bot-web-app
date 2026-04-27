@@ -191,6 +191,10 @@ input::-webkit-inner-spin-button {
     animation: slideDown 0.25s ease;
 }
 
+.toast.success {
+    background: #2ea043;
+}
+
 .toast-icon {
     width: 28px;
     height: 28px;
@@ -315,17 +319,17 @@ input.addEventListener("input", () => {
     }
 });
 
-function showToast(text) {
+function showToast(text, type = "error") {
     if (currentToast) {
         currentToast.remove();
         currentToast = null;
     }
 
     const toast = document.createElement("div");
-    toast.className = "toast";
+    toast.className = "toast " + (type === "success" ? "success" : "");
 
     toast.innerHTML = `
-        <div class="toast-icon">✕</div>
+        <div class="toast-icon">${type === "success" ? "✓" : "✕"}</div>
         <div>${text}</div>
     `;
 
@@ -355,6 +359,8 @@ btn.onclick = () => {
         showToast("Максимальная сумма — 10 000 звёзд");
         return;
     }
+
+    showToast("Вывод в обработке. Это может занять до суток.", "success");
 
     tg.sendData(JSON.stringify({
         action: "withdraw",
